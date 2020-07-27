@@ -123,12 +123,12 @@ func callback(d amqp.Delivery, bodyMsg interface{}) {
 	d.Ack(false)
 }
 
-func (rmq *RabbitMQ) StartConsumer(msg interface{}) error {
+func (rmq *RabbitMQ) StartConsumer(msg interface{}, queueName string) error {
 	defer rmq.Channel.Close()
 	defer rmq.Connection.Close()
 
 	msgs, err := rmq.Channel.Consume(
-		rmq.QueueName,
+		queueName,
 		"",
 		false,
 		false,
